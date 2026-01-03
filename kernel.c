@@ -101,8 +101,8 @@ void kmain(void) {
     serial_puts("    kacchiOS - Multitasking Enabled\n");
     serial_puts("========================================\n");
 
-    memory_init();
-    process_init();
+    memory_init();// Initialize memory allocator
+    process_init();// Initialize process table
 
     process_create(shell_task);
     process_create(task_a);
@@ -110,7 +110,7 @@ void kmain(void) {
 
     serial_puts("Starting Scheduler...\n\n");
 
-    schedule();
+    schedule();// Start the first process
 
     for (;;) {
         __asm__ volatile ("hlt");

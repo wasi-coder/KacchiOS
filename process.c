@@ -6,8 +6,8 @@
 
 #define MAX_PROC 10
 static pcb_t process_table[MAX_PROC];
-static int current_pid = -1;
-static int proc_count = 0;
+static int current_pid = -1;//starts at no process yet so -1
+static int proc_count = 0; //number of processes created so far 
 
 extern void context_switch(uint32_t* old_esp, uint32_t new_esp);
 
@@ -31,9 +31,11 @@ int process_create(void (*entry)(void)) {
     if (proc_count >= MAX_PROC) return -1;
     
     pcb_t* p = &process_table[proc_count++];
-    uint32_t* stack = (uint32_t*)kalloc(4096);
-    uint32_t* esp = (uint32_t*)((uint32_t)stack + 4096);
+    uint32_t* stack = (uint32_t*)kalloc(4096); //4kb er stack 
+    uint32_t* esp = (uint32_t*)((uint32_t)stack + 4096); //stack er top a point kortase 
+    //as the stackj grows downwards, we start at the top
 
+    
     /* 2. UPDATE: Setup stack to auto-exit */
     // If 'entry' function returns, it will "return" to process_exit
     *(--esp) = (uint32_t)process_exit; // Return address

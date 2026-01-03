@@ -1,7 +1,7 @@
 #include "memory.h"
 #include "types.h"
 
-extern uint32_t __kernel_end; // Defined in link.ld
+extern uint32_t __kernel_end; // Defined in link.ld 
 static uint32_t next_free_address;
 
 void memory_init(void) {
